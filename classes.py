@@ -77,6 +77,7 @@ class Phone(Field):
 class Birthday(Field):
     def __init__(self, birthday=""):
         super().__init__()
+        self.__value = None
         self.value = convert_to_date(birthday)
 
     @property
@@ -85,7 +86,7 @@ class Birthday(Field):
 
     @value.setter
     def value(self, birthday: datetime):
-        if birthday.year > 1:
+        if birthday and birthday.year > 1:
             self.__value = birthday
 
 
@@ -172,6 +173,9 @@ class AddressBook(UserDict):
         self.show = None  # iterator is not created
         self.filename = "AddressBook.txt"
 
+    def clear(self):
+        self.data = {}
+        
     def write_to_file(self, filename=""):
         if not filename:
             filename = self.filename

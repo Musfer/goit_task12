@@ -17,6 +17,14 @@ def read_from_file(book: AddressBook, text: str = ""):
     return book.read_from_file(text)
 
 
+def clear(book: AddressBook, *_):
+    if confirm(f"Do you want to delete all contacts from your Address book? Type 'yes'/'no'.\n"):
+        book.clear()
+        return f"Done!"
+    else:
+        return f"Glad you changed your mind."
+
+
 def confirm(question):
     while True:
         string = input(question)
@@ -164,6 +172,8 @@ def delete_number(book: AddressBook, data: str):
             if confirm(f"Do you want to delete all numbers from contact '{name}'? Type 'yes'/'no'.\n"):
                 book.data[name] = Record(Name(name))
                 return f"Done!"
+            else:
+                return f"Glad you changed your mind."
         else:
             return f"Contact {name} does not exist."
     elif name and number:
@@ -185,6 +195,8 @@ def delete_contact(book: AddressBook, data: str):
         if confirm(f"Contact '{name}' will be deleted from your phone book. Are you sure? Type 'yes' or 'no'.\n"):
             book.delete_record(name)
             return "Done!"
+        else:
+            return f"Glad you changed your mind."
 
 
 def set_birthday(book: AddressBook, data: str):
@@ -223,4 +235,5 @@ def help_me(*_):
            "\tdelete phone 'name' 'phone number': deletes the phone number from contact\n" + \
            "\tsave 'file name': saves you Address book to 'file name'\n" + \
            "\tload 'file name': loads existing Address book from 'file name'\n" + \
+           "\tclear: clears your Address book\n" + \
            "\texit: close the assistant\n"

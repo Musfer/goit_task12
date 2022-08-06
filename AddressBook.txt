@@ -1,1 +1,85 @@
-{}
+{
+    "Musfer": {
+        "Musfer": [
+            [
+                "+380941213234",
+                "0931824456"
+            ],
+            "12.25.1995"
+        ]
+    },
+    "Stas": {
+        "Stas": [
+            [
+                "+380951112233"
+            ],
+            "08.01.0002"
+        ]
+    },
+    "Yurii": {
+        "Yurii": [
+            [],
+            null
+        ]
+    },
+    "Geogry": {
+        "Geogry": [
+            [],
+            null
+        ]
+    },
+    "Anna": {
+        "Anna": [
+            [
+                "0987654321"
+            ],
+            null
+        ]
+    },
+    "Denis": {
+        "Denis": [
+            [],
+            null
+        ]
+    },
+    "Pavel": {
+        "Pavel": [
+            [
+                "+380934523782"
+            ],
+            null
+        ]
+    },
+    "Volodymir Zelenskii": {
+        "Volodymir Zelenskii": [
+            [
+                "1234567"
+            ],
+            null
+        ]
+    },
+    "Name1 Name2 Name3": {
+        "Name1 Name2 Name3": [
+            [],
+            null
+        ]
+    },
+    "Contact10": {
+        "Contact10": [
+            [],
+            null
+        ]
+    },
+    "Contact11": {
+        "Contact11": [
+            [],
+            null
+        ]
+    },
+    "Contact12": {
+        "Contact12": [
+            [],
+            null
+        ]
+    }
+}
