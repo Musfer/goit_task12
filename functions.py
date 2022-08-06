@@ -235,5 +235,6 @@ def help_me(*_):
            "\tdelete phone 'name' 'phone number': deletes the phone number from contact\n" + \
            "\tsave 'file name': saves you Address book to 'file name'\n" + \
            "\tload 'file name': loads existing Address book from 'file name'\n" + \
+           "\tfind 'string': searches 'string' in names and phone numbers" +\
            "\tclear: clears your Address book\n" + \
            "\texit: close the assistant\n"
