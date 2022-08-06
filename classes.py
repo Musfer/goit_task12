@@ -2,6 +2,7 @@ from collections import UserDict
 from datetime import datetime
 from copy import copy, deepcopy
 import json
+from pathlib import Path
 
 
 def convert_to_date(birthday: str = ""):
@@ -171,14 +172,40 @@ class AddressBook(UserDict):
         self.show = None  # iterator is not created
         self.filename = "AddressBook.txt"
 
-    def write_contacts_to_file(self):
-        with open(self.filename, "w") as fh:
+    def write_to_file(self, filename=""):
+        if not filename:
+            filename = self.filename
+        with open(filename, "w") as fh:
             json.dump(self, fh, cls=CustomEncoder, indent=4)
-        return f"Your Address book has been saved to '{self.filename}'"
+        return f"Your Address book has been saved to '{filename}'"
+
+    def read_from_file(self, filename=""):
+        if not filename:
+            filename = self.filename
+        if not Path(filename).exists() or not Path(filename).is_file():
+            return f"No such file '{filename}'"
+        else:
+            with open(filename, "r") as fh:
+                data = json.load(fh)
+                if not isinstance(data, dict):
+                    return f"Error: 'filename' is not an Address book"
+                else:
+                    self.data = {}
+                    for name, record in data.items():
+                        phones = record[name][0]
+                        birthday = record[name][1]
+                        record = Record(Name(name), [])
+                        self.add_record(record)
+                        if birthday:
+                            self.get(name).set_birthday(Birthday(birthday))
+                        if phones:
+                            for phone in phones:
+                                self.get(name).add_number(Phone(phone))
+            return "Done"
 
     def add_record(self, record: Record):
         self.data[record.name.value] = record
-        self.reset_iterator(2)
+        self.reset_iterator(10)
 
     def reset_iterator(self, n: int):
         self.show = self.iterator(n)

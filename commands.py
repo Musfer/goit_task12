@@ -1,6 +1,6 @@
 import sys
 from functions import add_contact, show_all, phone, add_number, help_me, delete_number, delete_contact, set_birthday
-from functions import show_contact, empty, reset, delete_birthday, find, save_to_file
+from functions import show_contact, empty, reset, delete_birthday, find, save_to_file, read_from_file
 
 
 commands = {
@@ -19,6 +19,7 @@ commands = {
     "empty": empty,
     "reset": reset,
     "save": save_to_file,
+    "load": read_from_file,
     "delete_birthday": delete_birthday,
     0: lambda *_: "Sorry I can't understand you. Try 'help' command to see what I can.",
 }
@@ -33,6 +34,7 @@ def def_mod(string: str):
             "close": "bye",
             "exit": "bye",
             "save": "save",
+            "load": "load",
             "add contact": "add_contact",
             "add phone number": "add_number",
             "add phone": "add_number",

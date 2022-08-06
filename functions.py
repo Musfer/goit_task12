@@ -7,8 +7,14 @@ no_number = "Sorry, I can't identify a phone number."
 no_name = "Sorry, I can't identify a contact's name."
 
 
-def save_to_file(book: AddressBook, text: str):
-    return book.write_contacts_to_file()
+def save_to_file(book: AddressBook, text: str = ""):
+    text = text.strip()
+    return book.write_to_file(text)
+
+
+def read_from_file(book: AddressBook, text: str = ""):
+    text = text.strip()
+    return book.read_from_file(text)
 
 
 def confirm(question):
@@ -215,4 +221,6 @@ def help_me(*_):
            "\t\tphone number should be 7 digits long + optional 3 digits of city code\n" + \
            "\t\t+ optional 2 digits of country code + optional '+' sight\n" + \
            "\tdelete phone 'name' 'phone number': deletes the phone number from contact\n" + \
+           "\tsave 'file name': saves you Address book to 'file name'\n" + \
+           "\tload 'file name': loads existing Address book from 'file name'\n" + \
            "\texit: close the assistant\n"
