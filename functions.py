@@ -31,6 +31,24 @@ def find_name(text: str):  # converts text into name. Should be used only after 
     return text.strip().lower().title()
 
 
+def find(book: AddressBook, text: str):
+    contacts = book.search_in_names(text)  # list of names
+    numbers = book.search_in_phones(text)  # list of tuples (name, number)
+    result = ""
+    if not (contacts or numbers):
+        return "No matches found"
+    else:
+        if contacts:
+            result += f"Matches in names:\n"
+            for name in contacts:
+                result += f"\t{name}\n"
+        if numbers:
+            result += f"Matches in phone numbers:\n"
+            for pair in numbers:
+                result += f"\t{pair[0]}: {pair[1]}\n"
+        return result
+
+
 def name_birthday(book: AddressBook, text: str):
     for contact in book.data.keys():
         if contact.lower() in text.lower():
@@ -53,7 +71,7 @@ def add_contact(book: AddressBook, data: str):
         else:
             record = Record(Name(name), [])
             book.add_record(record)
-            return f"No valid phone number found. Created contact '{name}' with no phone numbers."
+            return f"Created contact '{name}' with no phone numbers."
 
 
 def show_contact(book: AddressBook, data: str):

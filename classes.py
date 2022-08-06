@@ -125,7 +125,7 @@ class AddressBook(UserDict):
     def __init__(self):
         super().__init__(self)
         self.showing_records = False  # when True 'enter' shows next N contacts
-        self.show = None
+        self.show = None  # iterator is not created
 
     def add_record(self, record: Record):
         self.data[record.name.value] = record
@@ -145,3 +145,20 @@ class AddressBook(UserDict):
             string += str(self.data.get(contact))
             if not (i+1) % n or i == len(self.data.keys())-1:
                 yield string
+
+    def search_in_names(self, text: str = ""):
+        lst = []
+        text = text.strip().lower()
+        for name in self.keys():
+            if text in name.lower():
+                lst.append(name)
+        return lst
+
+    def search_in_phones(self, text: str = ""):
+        lst = []
+        text = text.strip().lower()
+        for name in self.keys():
+            for phone in self.get(name).phones:
+                if text in phone.value.lower():
+                    lst.append((name, phone.value.lower()))
+        return lst
