@@ -1,5 +1,7 @@
 from collections import UserDict
 from datetime import datetime
+from copy import copy, deepcopy
+import json
 
 
 def convert_to_date(birthday: str = ""):
@@ -18,6 +20,19 @@ def convert_to_date(birthday: str = ""):
 class Field:
     def __init__(self):
         self.__value = None
+
+    @property
+    def value(self):
+        return self.__value
+
+    def __copy__(self):
+        copy_obj = Field()
+        copy_obj.value = copy(self.value)
+        return copy_obj
+
+    @value.setter
+    def value(self, new_value=None):
+        self.__value = new_value
 
 
 class Name(Field):
@@ -79,6 +94,20 @@ class Record:
         self.phones = phones
         self.birthday = birthday
 
+    def __copy__(self):
+        copy_obj = Record(Name(""))
+        copy_obj.name = copy(self.name)
+        copy_obj.phones = copy(self.phones)
+        copy_obj.birthday = copy(self.birthday)
+        return copy_obj
+
+    def __deepcopy__(self, memo):
+        copy_obj = Record(Name(""))
+        copy_obj.name = deepcopy(self.name)
+        copy_obj.phones = deepcopy(self.phones)
+        copy_obj.birthday = deepcopy(self.birthday)
+        return copy_obj
+
     def __repr__(self):
         string = ""
         string += f"{self.name.value}:"
@@ -120,12 +149,32 @@ class Record:
         return (next_birthday-current_day).days
 
 
+class CustomEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, AddressBook):
+            return o.data
+        elif isinstance(o, Record):
+            return {o.name.value: (o.phones, o.birthday)}
+        elif isinstance(o, Birthday):
+            return o.value.strftime("%m.%d.%Y")
+        elif isinstance(o, Field):
+            return o.value
+        return super().default(0)
+
+
 class AddressBook(UserDict):
 
     def __init__(self):
         super().__init__(self)
+        self.data = {}
         self.showing_records = False  # when True 'enter' shows next N contacts
         self.show = None  # iterator is not created
+        self.filename = "AddressBook.txt"
+
+    def write_contacts_to_file(self):
+        with open(self.filename, "w") as fh:
+            json.dump(self, fh, cls=CustomEncoder, indent=4)
+        return f"Your Address book has been saved to '{self.filename}'"
 
     def add_record(self, record: Record):
         self.data[record.name.value] = record

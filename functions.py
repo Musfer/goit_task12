@@ -7,6 +7,10 @@ no_number = "Sorry, I can't identify a phone number."
 no_name = "Sorry, I can't identify a contact's name."
 
 
+def save_to_file(book: AddressBook, text: str):
+    return book.write_contacts_to_file()
+
+
 def confirm(question):
     while True:
         string = input(question)
